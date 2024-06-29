@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список поездок</title>
+</head>
+<body>
+    <h1>Список поездок</h1>
+    <table id="tripsTable">
+        <tr>
+            <th>Откуда</th>
+            <th>Куда</th>
+            <th>Дата</th>
+        </tr>
+    </table>
+
+    <script>
+        fetch('/getTrips')
+            .then(response => response.json())
+            .then(trips => {
+                const table = document.getElementById('tripsTable');
+                trips.forEach(trip => {
+                    const row = table.insertRow();
+                    const fromCell = row.insertCell();
+                    const toCell = row.insertCell();
+                    const dateCell = row.insertCell();
+                    fromCell.textContent = trip.from;
+                    toCell.textContent = trip.to;
+                    dateCell.textContent = trip.date;
+                });
+            })
+            .catch(error => console.error('Ошибка:', error));
+    </script>
+</body>
+</html>
